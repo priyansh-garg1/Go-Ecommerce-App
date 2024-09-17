@@ -1,21 +1,20 @@
 package main
 
 import (
-	"github.com/gofiber/fiber/v2"
+	"log"
+
+	"go-ecommerce-app/config"
+	"go-ecommerce-app/internal/api"
 )
 
 func main() {
-	app := fiber.New()
 
-	app.Get("/", func(ctx *fiber.Ctx) error {
-		return ctx.JSON("home page")
-	})
+	cfg, err := config.SetupEnv()
 
-	var arr [3]int
+	if err != nil {
+		log.Fatalf("Config failed to setup environment: %v\n", err)
+    }
 
-	arr[0] = 3
-	arr[4] = 2
-
-	app.Listen("localhost:8080")
+	api.StartServer(cfg)
 
 }
